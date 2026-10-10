@@ -17,7 +17,8 @@ coverage.*
 !coverage.go
 *.coverprofile
 profile.cov
-
+workmemo.txt
+*.bak
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
@@ -31,3 +32,4 @@ go.work.sum
 # Editor/IDE
 # .idea/
 # .vscode/
+photo/
