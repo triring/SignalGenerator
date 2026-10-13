@@ -107,8 +107,8 @@ var HelpText = [...]string{
 	"  H             :(Help)       コマンドの使用方法を表示する。",
 	"  F [tx_freq]   :(Frequency)  送信周波数を設定する。",
 	"  F             :(Frequency)  送信周波数を確認する。",
-	"  T [tone_freq] :(Tone)       発信音の周波数を設定する。",
-	"  T             :(Tone)       発信音の周波数を確認する。",
+	"  T [tone_freq] :(Tone)       発振音の周波数を設定する。",
+	"  T             :(Tone)       発振音の周波数を確認する。",
 	"  S             :(Start/Stop) 信号の送信と停止を行う。",
 	"  Q             :(Quit)       終了する。",
 }
@@ -126,7 +126,7 @@ func initTransmitter(pwm transmitter.PWM, antPin machine.Pin) (transmitter.Trans
 // txWorker は、バックグラウンド（Goroutine）で指定された周波数とトーンで信号を送出するワーカー関数です[cite: 1]。
 // doneChan からの終了通知を受け取るか、コマンドで停止されるまで動作を継続します。
 func txWorker(doneChan <-chan struct{}, tx transmitter.Transmitter, txFreq uint64, toneFreq int) {
-	// 発信音の設定
+	// 発振音の設定
 	interval := time.Duration(1000) * time.Millisecond / time.Duration(toneFreq)
 	// 送信周波数の設定
 	tx.SetFrequency(txFreq)
@@ -136,7 +136,7 @@ func txWorker(doneChan <-chan struct{}, tx transmitter.Transmitter, txFreq uint6
 			tx.Stop() // 出力を停止する。
 			return
 		default:
-			// 定常処理 設定した発信音になるように断続的に送信波を出力する。
+			// 定常処理 設定した発振音になるように断続的に送信波を出力する。
 			for i := 0; i < 100; i++ {
 				tx.SetDutyRatio(2)
 				time.Sleep(interval)
